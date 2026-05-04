@@ -1,0 +1,33 @@
+[project]
+name = "orders-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django==6.0.4",
+    "pillow==12.2.0",
+    "python-dotenv==1.2.2",
+    "whitenoise[brotli]==6.12.0",
+]
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar==6.3.0",
+    "ruff==0.15.12",
+]
+
+
+[tool.ruff]
+line-length = 120
+exclude = ["migrations", "*.ipynb"]
+
+[tool.ruff.lint]
+select = ["T201", "F811", "A001", "PLW2901", "PLR1704", "INP001", "F401"]
+
+[tool.ruff.lint.per-file-ignores]
+"up.py" = ["INP001"]
+
+[tool.ruff.format]
+# Prefer single quotes over double quotes
+quote-style = "single"
