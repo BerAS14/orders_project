@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}Создать новый заказ{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="mb-4">Создать новый заказ</h2>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Тип заказа</label>
+                    {{ form.order_type }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Наименование заказа</label>
+                    {{ form.name }}
+                </div>
+
+                <!-- Поля для единичного заказа -->
+                <div id="single-fields">
+                    <div class="mb-3">
+                        <label class="form-label">Описание</label>
+                        {{ form.description }}
+                    </div>
+                </div>
+
+                <!-- Поля для множественного заказа -->
+                <div id="multiple-fields" style="display: none;">
+                    <div class="mb-3">
+                        <label class="form-label">Документ</label>
+                        {{ form.document }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Количество</label>
+                        {{ form.quantity }}
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">Создать заказ</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary btn-lg">Отмена</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const typeSelect = document.querySelector('#id_order_type');
+    const singleFields = document.getElementById('single-fields');
+    const multipleFields = document.getElementById('multiple-fields');
+
+    function toggleFields() {
+        if (typeSelect.value === 'single') {
+            singleFields.style.display = 'block';
+            multipleFields.style.display = 'none';
+        } else if (typeSelect.value === 'multiple') {
+            singleFields.style.display = 'none';
+            multipleFields.style.display = 'block';
+        }
+    }
+
+    typeSelect.addEventListener('change', toggleFields);
+    toggleFields(); // начальное состояние
+});
+</script>
+{% endblock %}

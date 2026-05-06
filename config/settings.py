@@ -21,7 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Свои приложения
-
+    'accounts.apps.AccountsConfig',
+    'orders.apps.OrdersConfig',
 
     # Dev
     'debug_toolbar',
@@ -90,3 +91,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ====================== Авторизация ======================
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
