@@ -1,101 +1,176 @@
 {% extends 'base.html' %}
-{% block title %}Заказ {{ order.order_number }}{% endblock %}
+{% block title %}Заказ №{{ order.order_number }}{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-10 col-xl-8">
 
-            <!-- Заголовок -->
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="mb-0">Заказ №{{ order.order_number }}</h2>
-                <div>
-                    {% if request.user.is_staff %}
-                    <a href="{% url 'admin:orders_order_change' order.pk %}"
-                       class="btn btn-outline-primary me-2" target="_blank">
-                        ✏️
-                    </a>
-                    {% endif %}
-                    <a href="{% url 'home' %}" class="btn btn-outline-secondary">
-                        ← Назад к списку
-                    </a>
-                </div>
-            </div>
+<div class="page-container">
 
-            <!-- Основная карточка -->
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="fw-bold">Статус заказа</span>
-                        <span class="badge fs-6 px-4 py-2
-                            {% if order.status == 'ready' %}bg-success
-                            {% elif order.status == 'delivering' %}bg-warning text-dark
-                            {% elif order.status == 'assembling' %}bg-info
-                            {% elif order.status == 'processing' %}bg-primary
-                            {% else %}bg-secondary{% endif %}">
-                            {{ order.get_status_display }}
-                        </span>
-                    </div>
-                </div>
+    <!-- HEADER -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">
+                Заказ №{{ order.order_number }}
+            </h1>
 
-                <div class="card-body p-4">
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <p class="mb-1 text-muted">Дата создания</p>
-                            <p class="fw-medium">{{ order.created_at|date:"d.m.Y в H:i" }}</p>
-                        </div>
-                        {% if order.ready_date %}
-                        <div class="col-md-6">
-                            <p class="mb-1 text-muted">Дата готовности</p>
-                            <p class="fw-medium text-success">{{ order.ready_date|date:"d.m.Y" }}</p>
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <hr class="my-4">
-
-                    <h5 class="mb-3">Информация о заказе</h5>
-
-                    <p><strong>Наименование:</strong> {{ order.name }}</p>
-
-                    {% if order.order_type == 'single' %}
-                        <div class="mt-4">
-                            <strong>Описание</strong>
-                            <div class="border rounded-3 p-4 bg-light mt-2">
-                                {{ order.description|linebreaks }}
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="row mt-4">
-                            <div class="col-md-6">
-                                <p><strong>Тип заказа:</strong> Множественный</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Количество:</strong> <strong class="fs-5">{{ order.quantity }} шт.</strong></p>
-                            </div>
-                        </div>
-
-                        {% if order.document %}
-                        <div class="mt-4">
-                            <strong>Прикреплённый документ</strong>
-                            <div class="mt-2">
-                                <a href="{{ order.document.url }}" class="btn btn-outline-primary" target="_blank">
-                                    📄 Скачать документ
-                                </a>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endif %}
-                </div>
-
-                <!-- Футер карточки -->
-                <div class="card-footer bg-light py-3">
-                    <small class="text-muted">
-                        Создан: <strong>{{ order.user.get_full_name|default:order.user.username }}</strong>
-                    </small>
-                </div>
+            <div class="page-subtitle">
+                Создан {{ order.created_at|date:"d.m.Y в H:i" }}
             </div>
         </div>
+
+        <div class="page-actions">
+
+            {% if request.user.is_staff %}
+                <a href="{% url 'admin:orders_order_change' order.pk %}"
+                   class="btn btn-primary btn-lg"
+                   target="_blank">
+                    {% include 'components/icon.html' with name='edit' color='color-icon-default' %}
+
+                </a>
+            {% endif %}
+
+            <a href="{% url 'home' %}"
+               class="btn btn-primary-outline btn-lg-with-label">
+                ← Назад
+            </a>
+
+        </div>
     </div>
+
+    <!-- CARD -->
+    <div class="card">
+
+        <!-- STATUS -->
+        <div class="card-header">
+
+            <div>
+                <div class="card-subtitle">
+                    Статус заказа
+                </div>
+            </div>
+
+            <span class="badge status-{{ order.status }}">
+                {{ order.get_status_display }}
+            </span>
+
+        </div>
+
+        <!-- CONTENT -->
+        <div class="card-content">
+
+            <!-- ORDER NAME -->
+            <div class="content-section">
+                <div class="section-label">
+                    Наименование
+                </div>
+
+                <div class="section-value">
+                    {{ order.name }}
+                </div>
+            </div>
+
+            <!-- DATES -->
+            <div class="info-grid">
+
+                <div class="info-item">
+                    <div class="section-label">
+                        Дата создания
+                    </div>
+
+                    <div class="section-value">
+                        {{ order.created_at|date:"d.m.Y H:i" }}
+                    </div>
+                </div>
+
+                {% if order.ready_date %}
+                <div class="info-item">
+                    <div class="section-label">
+                        Дата готовности
+                    </div>
+
+                    <div class="section-value text-success">
+                        {{ order.ready_date|date:"d.m.Y" }}
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <!-- SINGLE -->
+            {% if order.order_type == 'single' %}
+
+                <div class="content-section">
+
+                    <div class="section-label">
+                        Описание
+                    </div>
+
+                    <div class="block-muted">
+                        {{ order.description|linebreaks }}
+                    </div>
+
+                </div>
+
+            <!-- MULTIPLE -->
+            {% else %}
+
+                <div class="info-grid">
+
+                    <div class="info-item">
+                        <div class="section-label">
+                            Тип заказа
+                        </div>
+
+                        <div class="section-value">
+                            Множественный
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="section-label">
+                            Количество
+                        </div>
+
+                        <div class="section-value section-value-large">
+                            {{ order.quantity }} шт.
+                        </div>
+                    </div>
+
+                </div>
+
+                {% if order.document %}
+                    <div class="content-section" style="display: flex; flex-direction: column; align-items: flex-start;">
+
+                        <div class="section-label">
+                            Документ
+                        </div>
+
+                        <a href="{{ order.document.url }}"
+                           class="btn btn-primary btn-lg"
+                           target="_blank">
+                            {% include 'components/icon.html' with name='download' color='color-icon-default' %}
+                        </a>
+
+                    </div>
+                {% endif %}
+
+            {% endif %}
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="card-footer">
+
+            <div class="card-subtitle">
+                Создан пользователем:
+                <strong>
+                    {{ order.user.get_full_name|default:order.user.username }}
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
+
 {% endblock %}

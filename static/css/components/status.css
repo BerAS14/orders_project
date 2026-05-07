@@ -1,0 +1,37 @@
+.badge {
+    display: inline-block;
+
+    padding: 8px 14px;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* STATUS */
+
+.status-created {
+    background: #e9ecef;
+    color: #495057;
+}
+
+.status-processing {
+    background: #cfe2ff;
+    color: #084298;
+}
+
+.status-assembling {
+    background: #cff4fc;
+    color: #055160;
+}
+
+.status-delivering {
+    background: #fff3cd;
+    color: #664d03;
+}
+
+.status-ready {
+    background: #d1e7dd;
+    color: #0f5132;
+}

@@ -1,0 +1,45 @@
+
+/* =========================
+   ICONS
+========================= */
+
+.new-icon-style {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1;
+}
+
+/* =========================
+   COLORS
+========================= */
+
+.color-icon-default {
+    stroke: var(--color-surface);
+}
+
+.color-icon-success {
+    stroke: var(--color-success);
+}
+
+.color-icon-danger {
+    stroke: var(--color-danger);
+}
+
+.color-icon-primary {
+    stroke: var(--color-primary);
+}
+
+/* =========================
+   SIZES
+========================= */
+
+.icon-small {
+    width: 17px;
+    height: 17px;
+}
+
+.icon-large {
+    width: 23px;
+    height: 23px;
+}
