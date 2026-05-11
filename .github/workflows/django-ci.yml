@@ -1,0 +1,41 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
+      with:
+        version: "0.9.x"
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: uv sync --frozen --no-install-project
+
+    # ==================== Linter ====================
+    - name: Run Ruff Linter
+      run: uv run ruff check . --output-format=github
+
+    # ==================== Tests ====================
+    - name: Run Django Tests
+      env:
+        SECRET_KEY: "dummy-test-key-for-github-actions-only-12345"
+        DEBUG: "True"
+      run: |
+        uv run python manage.py test orders accounts \
+          --verbosity=2 \
+          --parallel
