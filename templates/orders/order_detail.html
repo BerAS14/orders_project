@@ -4,55 +4,35 @@
 {% block content %}
 
 <div class="page-container">
-
-    <!-- HEADER -->
     <div class="page-header">
         <div>
             <h1 class="page-title">
                 Заказ №{{ order.order_number }}
             </h1>
-
             <div class="page-subtitle">
                 Создан {{ order.created_at|date:"d.m.Y в H:i" }}
             </div>
         </div>
-
         <div class="page-actions">
-
             {% if request.user.is_staff %}
-                <a href="{% url 'admin:orders_order_change' order.pk %}"
-                   class="btn btn-primary btn-lg"
-                   target="_blank">
+                <a href="{% url 'admin:orders_order_change' order.pk %}" class="btn btn-primary btn-lg" target="_blank">
                     {% include 'components/icon.html' with name='edit' color='color-icon-default' %}
-
                 </a>
             {% endif %}
-
         </div>
     </div>
-
-    <!-- CARD -->
     <div class="card">
-
-        <!-- STATUS -->
         <div class="card-header">
-
             <div>
                 <div class="card-subtitle">
                     Статус заказа
                 </div>
             </div>
-
             <span class="badge status-{{ order.status }}">
                 {{ order.get_status_display }}
             </span>
-
         </div>
-
-        <!-- CONTENT -->
         <div class="card-content">
-
-            <!-- ORDER NAME -->
             <div class="content-section">
                 <div class="section-label">
                     Наименование
@@ -62,110 +42,77 @@
                     {{ order.name }}
                 </div>
             </div>
-
-            <!-- DATES -->
             <div class="info-grid">
-
                 <div class="info-item">
                     <div class="section-label">
                         Дата создания
                     </div>
-
                     <div class="section-value">
                         {{ order.created_at|date:"d.m.Y H:i" }}
                     </div>
                 </div>
-
                 {% if order.ready_date %}
                 <div class="info-item">
                     <div class="section-label">
                         Дата готовности
                     </div>
-
                     <div class="section-value text-success">
                         {{ order.ready_date|date:"d.m.Y" }}
                     </div>
                 </div>
                 {% endif %}
-
             </div>
-
-            <!-- SINGLE -->
             {% if order.order_type == 'single' %}
-
                 <div class="content-section">
-
                     <div class="section-label">
                         Описание
                     </div>
-
                     <div class="block-muted">
                         {{ order.description|linebreaks }}
                     </div>
-
                 </div>
-
-            <!-- MULTIPLE -->
             {% else %}
-
                 <div class="info-grid">
-
                     <div class="info-item">
                         <div class="section-label">
                             Тип заказа
                         </div>
-
                         <div class="section-value">
                             Множественный
                         </div>
                     </div>
-
                     <div class="info-item">
                         <div class="section-label">
                             Количество
                         </div>
-
                         <div class="section-value section-value-large">
                             {{ order.quantity }} шт.
                         </div>
                     </div>
-
                 </div>
-
                 {% if order.document %}
                     <div class="content-section" style="display: flex; flex-direction: column; align-items: flex-start;">
-
                         <div class="section-label">
                             Документ
                         </div>
-
                         <a href="{{ order.document.url }}"
                            class="btn btn-primary btn-lg"
                            target="_blank">
                             {% include 'components/icon.html' with name='download' color='color-icon-default' %}
                         </a>
-
                     </div>
                 {% endif %}
-
             {% endif %}
-
         </div>
-
-        <!-- FOOTER -->
         <div class="card-footer">
-
             <div class="card-subtitle">
                 Создан пользователем:
                 <strong>
                     {{ order.user.get_full_name|default:order.user.username }}
                 </strong>
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 {% endblock %}

@@ -5,62 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Система Заказов{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/components/buttons.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/cards.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/status.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/forms.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/icons.css' %}">
-    <style>
-        .navbar-brand {
-            font-weight: bold;
-        }
-        .user-info {
-            font-weight: 500;
-            color: #fff;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdown = document.querySelector('.user-dropdown');
+    const button = document.getElementById('userDropdownButton');
+    button.addEventListener('click', function (e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+
+    });
+    document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+            dropdown.classList.remove('open');
+        }
+    });
+
+});
+</script>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">📦 Система Заказов</a>
-
-            <div class="navbar-nav ms-auto d-flex align-items-center gap-3">
-                {% if user.is_authenticated %}
-                    <!-- Имя и фамилия пользователя -->
-                    <span class="user-info">
-                        👤 {{ user.get_full_name|default:user.username }}
-                    </span>
-
-                    <!-- Ссылка на заказы -->
-                    <a class="nav-link" href="{% url 'home' %}">Мои заказы</a>
-
-                    <!-- Красивая кнопка выхода -->
-                    <form action="{% url 'logout' %}" method="post" class="d-inline">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-light btn-sm">
-                            Выйти
-                        </button>
-                    </form>
-
-                {% else %}
-                    <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">
-                        Войти
-                    </a>
-                {% endif %}
-            </div>
-        </div>
-    </nav>
-
+    {% include 'components/navbar.html' %}
     <div class="container mt-4">
         {% block content %}
         {% endblock %}
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

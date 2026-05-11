@@ -4,35 +4,32 @@
 {% block title %}Мои заказы{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Мои заказы</h2>
-        <a href="{% url 'order_create' %}" class="btn btn-primary">+ Новый заказ</a>
+<div class="page-container">
+    <div class="page-header">
+        <h1 class="page-title">Мои заказы</h1>
+        <a href="{% url 'order_create' %}" class="btn btn-success btn-lg-with-label">
+            Новый заказ
+        </a>
     </div>
-
-    <!-- Фильтр по статусу -->
-    <div class="mb-4">
-        <form method="get" class="d-flex gap-2">
-            <select name="status" class="form-select w-auto">
+    <div class="filter-bar">
+        <form method="get" class="filter-form">
+            <select name="status" class="form-select" onchange="this.form.submit()">
                 <option value="">Все статусы</option>
                 {% for value, label in status_choices %}
-                    <option value="{{ value }}"
-                            {% if status_filter == value %}selected{% endif %}>
+                    <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>
                         {{ label }}
                     </option>
                 {% endfor %}
             </select>
-            <button type="submit" class="btn btn-outline-secondary">Применить</button>
-            {% if status_filter %}
-                <a href="{% url 'home' %}" class="btn btn-outline-danger">Сбросить</a>
-            {% endif %}
+            <a href="{% url 'home' %}" class="btn btn-danger-outline btn-lg
+               {% if not status_filter %}disabled{% endif %}">
+                {% include 'components/icon.html' with name='clear_filter' color='color-icon-danger' %}
+            </a>
         </form>
     </div>
-
-    <!-- Таблица с кликабельными строками -->
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered">
-            <thead class="table-dark">
+    <div class="table-container">
+        <table class="custom-table">
+            <thead>
                 <tr>
                     <th>Номер заказа</th>
                     <th>Дата создания</th>
@@ -44,38 +41,39 @@
             </thead>
             <tbody>
                 {% for order in orders %}
-                <tr onclick="window.location.href='{% url 'order_detail' order.pk %}'"
-                    style="cursor: pointer;">
+                <tr onclick="window.location.href='{% url 'order_detail' order.pk %}'">
                     <td><strong>{{ order.order_number }}</strong></td>
                     <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
                     <td>{{ order.name }}</td>
                     <td>
-                        {% if order.order_type == 'single' %}Единичный{% else %}Множественный{% endif %}
+                        <span class="order-type">
+                            {% if order.order_type == 'single' %}Единичный{% else %}Множественный{% endif %}
+                        </span>
                     </td>
                     <td>
                         {% if order.status == 'created' %}
-                            <span class="badge bg-secondary">Создан</span>
+                            <span class="badge status-created">Создан</span>
                         {% elif order.status == 'processing' %}
-                            <span class="badge bg-primary">Обрабатывается</span>
+                            <span class="badge status-processing">Обрабатывается</span>
                         {% elif order.status == 'assembling' %}
-                            <span class="badge bg-info">Собирается</span>
+                            <span class="badge status-assembling">Собирается</span>
                         {% elif order.status == 'delivering' %}
-                            <span class="badge bg-warning text-dark">Доставляется</span>
+                            <span class="badge status-delivering">Доставляется</span>
                         {% elif order.status == 'ready' %}
-                            <span class="badge bg-success">Готов</span>
+                            <span class="badge status-ready">Готов</span>
                         {% endif %}
                     </td>
                     <td>
                         {% if order.ready_date %}
                             {{ order.ready_date|date:"d.m.Y" }}
                         {% else %}
-                            —
+                            <span class="text-muted">—</span>
                         {% endif %}
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="text-center py-5">У вас пока нет заказов</td>
+                    <td colspan="6" class="empty-state">У вас пока нет заказов</td>
                 </tr>
                 {% endfor %}
             </tbody>

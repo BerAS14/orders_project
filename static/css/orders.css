@@ -1,0 +1,63 @@
+/* FILTER */
+.filter-bar {
+    margin-bottom: 28px;
+}
+
+.filter-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+/* TABLE */
+.table-container {
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.custom-table th {
+    background: #0f172a;
+    color: white;
+    padding: 14px 18px;
+    font-weight: 500;
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.custom-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.custom-table tr:hover {
+    background: var(--active-item-background-color);
+    cursor: pointer;
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Badge + другие элементы */
+.order-type {
+    color: var(--color-muted);
+    font-weight: 500;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 90px 20px;
+    color: var(--color-muted);
+    font-size: 16px;
+}

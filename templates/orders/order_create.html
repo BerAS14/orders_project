@@ -4,200 +4,127 @@
 {% block content %}
 
 <div class="page-container">
-
-    <!-- HEADER -->
     <div class="page-header">
-
         <div>
             <h1 class="page-title">
                 Новый заказ
             </h1>
-
             <div class="page-subtitle">
                 Заполните информацию о заказе
             </div>
         </div>
-
     </div>
-
-    <!-- CARD -->
     <div class="card">
-
         <form method="post"
               enctype="multipart/form-data">
-
             {% csrf_token %}
-
             <div class="card-content">
-
-                <!-- TYPE -->
                 <div class="form-section">
-
                     <div class="section-header">
                         Тип заказа
                     </div>
-
                     <div class="section-description">
                         Выберите формат оформления заказа
                     </div>
-
                     <div class="form-group">
                         {{ form.order_type }}
                     </div>
-
                 </div>
-
-                <!-- INFO -->
                 <div class="form-section">
-
                     <div class="section-header">
                         Информация о заказе
                     </div>
-
                     <div class="section-description">
                         Укажите основную информацию
                     </div>
-
                     <div class="form-group">
-
                         <label class="form-label">
                             Наименование заказа
                         </label>
-
                         {{ form.name }}
-
                     </div>
-
                 </div>
-
-                <!-- SINGLE ORDER -->
                 <div id="single-fields">
-
                     <div class="form-section">
-
                         <div class="section-header">
                             Описание заказа
                         </div>
-
                         <div class="section-description">
                             Опишите детали заказа
                         </div>
-
                         <div class="form-group">
-
                             {{ form.description }}
                             {% if form.description.errors %}
                                 <div class="form-error">
                                     {{ form.description.errors.0 }}
                                 </div>
                             {% endif %}
-
                         </div>
-
                     </div>
-
                 </div>
-
-                <!-- MULTIPLE ORDER -->
                 <div id="multiple-fields" style="display: none;">
-
                     <div class="form-section">
-
                         <div class="section-header">
                             Документ и количество
                         </div>
-
                         <div class="section-description">
                             Загрузите документ с перечнем товаров
                         </div>
-
                         <div class="form-group">
-
                             <label class="form-label">
                                 Документ
                             </label>
-
                             {{ form.document }}
                             {% if form.document.errors %}
                                 <div class="form-error">
                                     {{ form.document.errors.0 }}
                                 </div>
                             {% endif %}
-
                         </div>
-
                         <div class="form-group">
-
                             <label class="form-label">
                                 Количество
                             </label>
-
                             {{ form.quantity }}
                             {% if form.quantity.errors %}
                                 <div class="form-error">
                                     {{ form.quantity.errors.0 }}
                                 </div>
                             {% endif %}
-
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
-            <!-- FOOTER -->
             <div class="card-footer">
-
                 <div class="form-actions">
-
-                    <a href="{% url 'home' %}"
-                       class="btn btn-success-outline btn-lg-with-label">
+                    <a href="{% url 'home' %}" class="btn btn-success-outline btn-lg-with-label">
                         Отмена
                     </a>
-
                     <button type="submit"
                             class="btn btn-success btn-lg-with-label">
                         Создать
                     </button>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
-
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-
     const typeSelect = document.querySelector('#id_order_type');
-
     const singleFields = document.getElementById('single-fields');
-
     const multipleFields = document.getElementById('multiple-fields');
-
     function toggleFields() {
-
         if (typeSelect.value === 'single') {
-
             singleFields.style.display = 'block';
             multipleFields.style.display = 'none';
-
         } else if (typeSelect.value === 'multiple') {
-
             singleFields.style.display = 'none';
             multipleFields.style.display = 'block';
-
         }
     }
-
     typeSelect.addEventListener('change', toggleFields);
-
     toggleFields();
 });
 </script>

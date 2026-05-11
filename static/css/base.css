@@ -1,6 +1,41 @@
 body {
     margin: 0;
-    font-family: system-ui, sans-serif;
+    font-family: var(--font-family-base);
     background: var(--color-bg);
     color: var(--color-text);
+    padding-top: 76px;
+}
+
+.page-container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 24px 16px;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.page-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+
+.page-subtitle {
+    margin-top: 4px;
+    color: var(--color-muted);
+    font-size: 13px;
 }

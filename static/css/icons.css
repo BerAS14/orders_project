@@ -1,8 +1,4 @@
-
-/* =========================
-   ICONS
-========================= */
-
+/* ICONS */
 .new-icon-style {
     fill: none;
     stroke-linecap: round;
@@ -10,10 +6,7 @@
     stroke-width: 1;
 }
 
-/* =========================
-   COLORS
-========================= */
-
+/* COLORS */
 .color-icon-default {
     stroke: var(--color-surface);
 }
@@ -30,10 +23,7 @@
     stroke: var(--color-primary);
 }
 
-/* =========================
-   SIZES
-========================= */
-
+/* SIZES */
 .icon-small {
     width: 17px;
     height: 17px;
