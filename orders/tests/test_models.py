@@ -1,7 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from orders.models import Order
-from datetime import date
 
 
 class OrderModelTest(TestCase):
