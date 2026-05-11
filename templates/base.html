@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 <body>
-    {% include 'components/navbar.html' %}
+    {% block navbar %}
+        {% include 'components/navbar.html' %}
+    {% endblock %}
     <div class="container mt-4">
         {% block content %}
         {% endblock %}
