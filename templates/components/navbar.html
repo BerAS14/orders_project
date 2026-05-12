@@ -7,9 +7,6 @@
         </div>
         <div class="navbar-right">
             {% if user.is_authenticated %}
-                <a href="{% url 'home' %}" class="navbar-link">
-                    Мои заказы
-                </a>
                 <div class="user-dropdown">
                     <button class="user-dropdown-toggle" id="userDropdownButton">
                         <span class="user-name">

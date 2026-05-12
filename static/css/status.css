@@ -1,10 +1,7 @@
 .badge {
     display: inline-block;
-
     padding: 8px 14px;
-
     border-radius: 999px;
-
     font-size: 13px;
     font-weight: 600;
 }
@@ -33,4 +30,11 @@
 .status-ready {
     background: #d1e7dd;
     color: #0f5132;
+}
+
+@media (max-width: 768px) {
+    .badge {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
 }

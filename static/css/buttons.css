@@ -115,3 +115,21 @@
     padding: 6px 12px;
     border-radius: 11px;
 }
+
+.btn-sm {
+    font-size: 12px;
+    height: 27px;
+    padding: 4px;
+    border-radius: 9px;
+}
+
+.btn-sm-with-label {
+    font-size: 14px;
+    height: 27px;
+    padding: 4px 8px;
+    border-radius: 9px;
+}
+
+.btn-no-border {
+    border: none;
+}
